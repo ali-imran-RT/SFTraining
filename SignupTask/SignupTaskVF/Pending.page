@@ -1,0 +1,279 @@
+<apex:page controller="SignUpController" id="pendingIformationPage" lightningStylesheets="true" >
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+    <apex:form id="pendingIformationForm">
+        
+        <script> 
+        twistSection(document.getElementById('{!$Component.block1.section1}').getElementsByTagName('img')[0]) 
+        </script>
+        
+        <!--1. Personal Information here-->
+        <apex:pageBlock id="personalInfo" rendered="{! if(PersonalInfo.FirstName == '' || PersonalInfo.selected == '' || NewContact.Birthdate == null ,true,false)}">
+            <h3>Personal Information</h3>
+            <apex:pageBlockSection id="section1" collapsible="true" title="Remaining Personal Information">
+                
+                <apex:outputPanel rendered="{! if(PersonalInfo.Owner == '',true,false)}"> 
+                    <apex:outputLabel value="Owner"></apex:outputLabel>
+                    <br/>
+                    <apex:outputLabel value="{!PersonalInfo.Owner}"></apex:outputLabel>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(PersonalInfo.FirstName == '',true,false)}">
+                    <apex:outputLabel value="Fisrt Name"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!PersonalInfo.FirstName}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(PersonalInfo.selected == '',true,false)}">
+                    <apex:outputLabel >Salutations</apex:outputLabel>
+                    <br/>
+                    <apex:selectList value="{!PersonalInfo.selected}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!PersonalInfo.Salutations}"/>
+                    </apex:selectList>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(PersonalInfo.LastName == '',true,false)}">
+                    <apex:outputLabel value="Last Name"><span style="color:red;">*</span></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!PersonalInfo.LastName}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(NewContact.Birthdate == null,true,false)}">
+                    <apex:outputLabel >Birthday</apex:outputLabel>
+                    <br/>
+                    <apex:inputField value="{!NewContact.Birthdate}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(PersonalInfo.Email == '',true,false)}">
+                    <apex:outputLabel >Email<span style="color:red;">*</span></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!PersonalInfo.Email}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel ></apex:outputPanel>
+                
+                <!--<apex:outputPanel >
+                    <apex:commandButton value="Cancel" action="/apex/SignUp"/>
+                    <apex:commandButton value="Next" action="/apex/ContactInformation"/>
+                </apex:outputPanel>-->
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+        
+        
+        <!-- 2. Contact Information here -->
+        <apex:pageBlock id="contactInfo" rendered="{! if(ContactInfo.HomePhone == '' || ContactInfo.OtherPhone == '' || ContactInfo.Fax == '' ,true,false)}">
+           <h3>Contact Information</h3>
+           <apex:pageBlockSection id="section1" collapsible="true" title="Remaining Contact Information">
+               <apex:outputPanel rendered="{! if(ContactInfo.Phone == '',true,false)}">
+                   <apex:outputLabel value="Phone"><span style="color:red;">*</span></apex:outputLabel>
+                   <br/>
+                   <apex:inputText id="inputPhone"  value="{!ContactInfo.Phone}"/>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel rendered="{! if(ContactInfo.Department == '',true,false)}">
+                   <apex:outputLabel >Department<span style="color:red;">*</span></apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.Department}"/>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel rendered="{! if(ContactInfo.HomePhone == '',true,false)}">
+                   <apex:outputLabel value="Home Phone"></apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.HomePhone}"/>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel rendered="{! if(ContactInfo.OtherPhone == '',true,false)}">
+                   <apex:outputLabel >Other Phone</apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.OtherPhone}"/>
+               </apex:outputPanel>
+               <apex:outputPanel rendered="{! if(ContactInfo.Fax == '',true,false)}">
+                   <apex:outputLabel >Fax</apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.Fax}"/>
+               </apex:outputPanel>
+               <br/>
+               <apex:outputPanel ></apex:outputPanel>
+               <!--<apex:outputPanel >
+                   <apex:commandButton value="Previous" action="/apex/Personal_Information"/>
+                   <apex:commandButton value="Next" action="/apex/RelatedTo"/>
+               </apex:outputPanel>-->
+               
+           </apex:pageBlockSection>
+           
+       </apex:pageBlock>
+        
+        <!-- 3. Related To Information here 
+        <apex:pageBlock id="relatedTo">
+            <h3>Related to Information</h3>
+            <apex:pageBlockSection id="section1" collapsible="true" title="Remaining Related to Information">
+                
+                <apex:outputPanel rendered="{! if(RelatedToInfo.AssistantPhone == '',true,false)}">
+                    <apex:outputLabel >Assistant Phone<span style="color:red;">*</span></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!RelatedToInfo.AssistantPhone}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(RelatedToInfo.AccountNameList == '',true,false)}">
+                    <apex:outputLabel value="Account"><span style="color:red;">*</span></apex:outputLabel>
+                    <br/>
+                    <apex:selectList value="{!RelatedToInfo.SelectedAccount}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!RelatedToInfo.AccountNameList}"/>
+                    </apex:selectList>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel ></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(RelatedToInfo.SelectedContact == '',true,false)}">
+                    <apex:outputLabel value="Report To"><span style="color:red;">*</span></apex:outputLabel>
+                    <br/>
+                    <apex:selectList value="{!RelatedToInfo.SelectedContact}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!RelatedToInfo.ReportToList}"/>
+                    </apex:selectList>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel ></apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:commandButton value="Previous" action="/apex/ContactInformation"/>
+                    <apex:commandButton value="Next" action="/apex/AddressInformation"/>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+        -->
+        
+        <!-- 4. Address Information here -->
+        <apex:pageBlock id="addressInfo" rendered="{! if(AddressInfo.mailingStreet == '' || AddressInfo.mailingCity == '' || AddressInfo.mailingState == '' || AddressInfo.mailingPostalCode == '' || AddressInfo.mailingCountry == '' || AddressInfo.otherStreet == '' || AddressInfo.otherCity == '' || AddressInfo.otherState == '' || AddressInfo.otherPostalCode == '' || AddressInfo.otherCountry == '' ,true,false)}">
+            <h3>Address Information</h3>
+            <apex:pageBlockSection id="section1" collapsible="true" title="Remaining Address Information">
+                <apex:outputPanel rendered="{! if(AddressInfo.mailingStreet == '',true,false)}">
+                    <p>
+                        Mailing Address
+                    </p>
+                    <apex:outputLabel value="Mailing Street"></apex:outputLabel>
+                    <br/>
+                    <apex:inputTextarea id="mailingStreet" value="{!AddressInfo.mailingStreet}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.otherStreet == '',true,false)}">
+                    <p>
+                        Other Address
+                    </p>
+                    <apex:outputLabel >Other Street</apex:outputLabel>
+                    <br/>
+                    <apex:inputTextarea value="{!AddressInfo.otherStreet}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.mailingCity == '',true,false)}">
+                    <apex:outputLabel value="Mailing City"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingCity}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.otherCity == '',true,false)}">
+                    <apex:outputLabel >Other City</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherCity}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.mailingState == '',true,false)}">
+                    <apex:outputLabel value="Mailing State/Province"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingState}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.otherState == '',true,false)}">
+                    <apex:outputLabel value="Other State/Province"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherState}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.mailingPostalCode == '',true,false)}">
+                    <apex:outputLabel >Mailing Zip/Postal Code</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingPostalCode}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{! if(AddressInfo.otherPostalCode == '',true,false)}">
+                    <apex:outputLabel >Other Zip/Postal Code</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherPostalCode}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.mailingCountry == '',true,false)}">
+                    <apex:outputLabel >Mailing Country</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingCountry}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{! if(AddressInfo.otherCountry == '',true,false)}">
+                    <apex:outputLabel >Other Country</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherCountry}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel ></apex:outputPanel>
+                <!--<apex:outputPanel >
+                    <apex:commandButton value="Previous" action="/apex/RelatedTo"/>
+                    <apex:commandButton value="Next" action="/apex/AdditionalInformation"/>
+                </apex:outputPanel>-->
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+        
+        <!-- 5. Additional Information here -->
+        <apex:pageBlock id="additionalInfo" rendered="{! if(AdditionalInfo.Language == '' || AdditionalInfo.Description == '',true,false)}">
+           <h3>Additional Information</h3>
+           <apex:pageBlockSection id="section1" collapsible="true" title="Remaining Additional Information">
+               <apex:outputPanel rendered="{! if(AdditionalInfo.Language == '',true,false)}">
+                   <apex:outputLabel value="Language"></apex:outputLabel>
+                   <br/>
+                   <apex:inputText id="language" value="{!AdditionalInfo.Language}" />
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel rendered="{! if(AdditionalInfo.Level == '',true,false)}">
+                   <apex:outputLabel value="Level"><span style="color:red;">*</span></apex:outputLabel>
+                   <br/>
+                   <apex:selectList value="{!AdditionalInfo.Level}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!AdditionalInfo.LevelsDropDown}"/>
+                    </apex:selectList>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel rendered="{! if(AdditionalInfo.Description == '',true,false)}">
+                   <apex:outputLabel value="Description"></apex:outputLabel>
+                   <br/>
+                   <apex:inputTextarea id="description" value="{!AdditionalInfo.Description}"/>
+                   <br/>
+               </apex:outputPanel>
+               
+               <apex:outputPanel ></apex:outputPanel>
+               <apex:outputPanel ></apex:outputPanel>
+               <!--<apex:outputPanel >
+                   <apex:commandButton value="Previous" action="/apex/AddressInformation"/>
+                   <apex:commandButton value="Next" action="null"/>
+               </apex:outputPanel>-->
+           </apex:pageBlockSection>
+           
+       </apex:pageBlock>
+        
+        <apex:outputPanel style="float:right">
+            <apex:commandButton value="Previous" action="{!NavigateToAdditionalInfo}"/>
+            <apex:commandButton value="Save" action="{!SaveRecord}"/>
+        </apex:outputPanel>
+        
+    </apex:form>
+</apex:page>

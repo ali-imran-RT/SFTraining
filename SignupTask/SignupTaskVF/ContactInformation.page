@@ -1,0 +1,44 @@
+<apex:page controller="SignUpController" id="contactInformationPage" lightningStylesheets="true">
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+   <apex:form id="contactInformationForm">        
+       <apex:pageBlock >
+           <h3>Contact Information</h3>
+           <apex:pageBlockSection >
+               <apex:outputPanel >
+                   <apex:outputLabel value="Phone"><span style="color:red;">*</span></apex:outputLabel>
+                   <br/>
+                   <apex:inputText id="inputPhone"  value="{!ContactInfo.Phone}"/>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel ><apex:outputLabel >Department<span style="color:red;">*</span></apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.Department}"/>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel >
+                   <apex:outputLabel value="Home Phone"></apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.HomePhone}"/>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel >
+                   <apex:outputLabel >Other Phone</apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.OtherPhone}"/>
+               </apex:outputPanel>
+               <apex:outputPanel >
+                   <apex:outputLabel >Fax</apex:outputLabel>
+                   <br/>
+                   <apex:inputText value="{!ContactInfo.Fax}"/>
+               </apex:outputPanel>
+               <br/>
+               <apex:outputPanel ></apex:outputPanel>
+               <apex:outputPanel >
+                   <apex:commandButton value="Previous" action="{!NavigateToPersoanlInfo}"/>
+                   <apex:commandButton value="Next" action="{!NavigateToRelatedToInfo}"/>
+               </apex:outputPanel>
+           </apex:pageBlockSection>
+           
+       </apex:pageBlock>
+   </apex:form>
+</apex:page>

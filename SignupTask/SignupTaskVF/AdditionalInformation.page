@@ -1,0 +1,37 @@
+<apex:page controller="SignUpController" id="additionalInfoPage" lightningStylesheets="true">
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+   <apex:form id="additionalInfoForm">        
+       <apex:pageBlock >
+           <h3>Additional Information</h3>
+           <apex:pageBlockSection >
+               <apex:outputPanel >
+                   <apex:outputLabel value="Language"></apex:outputLabel>
+                   <br/>
+                   <apex:inputText id="language" value="{!AdditionalInfo.Language}" />
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel >
+                   <apex:outputLabel value="Level"><span style="color:red;">*</span></apex:outputLabel>
+                   <br/>
+                   <apex:selectList value="{!AdditionalInfo.Level}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!AdditionalInfo.LevelsDropDown}"/>
+                    </apex:selectList>
+                   <br/>
+               </apex:outputPanel>
+               <apex:outputPanel ><apex:outputLabel value="Description"></apex:outputLabel>
+                   <br/>
+                   <apex:inputTextarea id="description" value="{!AdditionalInfo.Description}"/>
+                   <br/>
+               </apex:outputPanel>
+               
+               <apex:outputPanel ></apex:outputPanel>
+               <apex:outputPanel ></apex:outputPanel>
+               <apex:outputPanel >
+                   <apex:commandButton value="Previous" action="{!NavigateToAddressInfo}"/>
+                   <apex:commandButton value="Next" action="{!NavigateToPendingInfo}"/>
+               </apex:outputPanel>
+           </apex:pageBlockSection>
+           
+       </apex:pageBlock>
+   </apex:form>
+</apex:page>
