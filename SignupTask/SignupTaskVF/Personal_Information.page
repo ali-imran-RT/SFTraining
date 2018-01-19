@@ -1,0 +1,62 @@
+<apex:page controller="SignUpController" id="personalInformationPage" lightningStylesheets="true">
+    
+  
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+    <apex:form id="PersonalInformationForm">
+        
+        
+        <apex:pageBlock >
+            <h3>Personal Information</h3>
+            <apex:pageBlockSection >
+                
+                <apex:outputPanel > 
+                    <apex:outputLabel value="Owner"></apex:outputLabel>
+                    <br/>
+                    <apex:outputLabel value="{!PersonalInfo.Owner}"></apex:outputLabel>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel value="Fisrt Name"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!PersonalInfo.FirstName}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel ><apex:outputLabel >Salutations</apex:outputLabel>
+                    <br/>
+                    <apex:selectList value="{!PersonalInfo.selected}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!PersonalInfo.Salutations}"/>
+                    </apex:selectList>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel value="Last Name"><span style="color:red;">*</span></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!PersonalInfo.LastName}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel >Birthday</apex:outputLabel>
+                    <br/>
+                    <apex:inputField value="{!NewContact.Birthdate}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel >Email<span style="color:red;">*</span></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!PersonalInfo.Email}"/>
+                    <br/>
+                </apex:outputPanel>
+                <apex:outputPanel ></apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:commandButton value="Cancel" action="{!NavigateToSignUp}"/>
+                    <apex:commandButton value="Next" action="{!NavigateToContactInfo}"/>
+                </apex:outputPanel>
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

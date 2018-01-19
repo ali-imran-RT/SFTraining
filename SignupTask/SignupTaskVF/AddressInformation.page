@@ -1,0 +1,87 @@
+<apex:page controller="SignUpController" lightningStylesheets="true">
+    <apex:form id="contactInformationForm">        
+        <apex:pageBlock >
+            <h3>Address Information</h3>
+            <apex:pageBlockSection >
+                <apex:outputPanel >
+                    <p>
+                        Mailing Address
+                    </p>
+                    <apex:outputLabel value="Mailing Street"></apex:outputLabel>
+                    <br/>
+                    <apex:inputTextarea id="mailingStreet" value="{!AddressInfo.mailingStreet}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <p>
+                        Other Address
+                    </p>
+                    <apex:outputLabel >Other Street</apex:outputLabel>
+                    <br/>
+                    <apex:inputTextarea value="{!AddressInfo.otherStreet}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel value="Mailing City"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingCity}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel >Other City</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherCity}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel value="Mailing State/Province"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingState}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel value="Other State/Province"></apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherState}"/>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel >Mailing Zip/Postal Code</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingPostalCode}"/>
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:outputLabel >Other Zip/Postal Code</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherPostalCode}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel >Mailing Country</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.mailingCountry}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel >
+                    <apex:outputLabel >Other Country</apex:outputLabel>
+                    <br/>
+                    <apex:inputText value="{!AddressInfo.otherCountry}"/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel ></apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:commandButton value="Previous" action="{!NavigateToRelatedToInfo}"/>
+                    <apex:commandButton value="Next" action="{!NavigateToAdditionalInfo}"/>
+                </apex:outputPanel>
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
