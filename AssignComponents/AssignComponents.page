@@ -1,0 +1,207 @@
+<apex:page id="MainPage" standardController="Component__c" lightningStylesheets="true" extensions="AssignComponents">
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
+        </script>
+    </head>
+    
+    <style type="text/css">
+        .modal {
+        display: block; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 9999999; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content */
+        .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 50%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+        }
+        
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0} 
+        to {top:0; opacity:1}
+        }
+        
+        @keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+        }
+        
+        /* The Close Button */
+        .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        }
+        
+        .modal-header {
+        padding: 2px 16px;
+        background-color: #5cb85c;
+        color: white;
+        }
+        
+        .modal-body {padding: 2px 16px;}
+        
+        .modal-footer {
+        padding: 2px 16px;
+        background-color: #5cb85c;
+        color: white;
+        }
+        
+        
+    </style>
+    
+    <script>
+    function readava(av){
+        areadava(''+av);
+    }
+    function readsel(se){
+        areadsel(''+se);
+    }
+    function PopUpUrl(cid){
+        
+        PopUpUrlMaker(''+cid);
+    }
+    </script>
+    
+    
+    <apex:form >
+        <apex:actionFunction name="areadava" action="{!addtosel}" reRender="AvaTable,SelTable">
+            <apex:param name="P1" value="" assignTo="{!avaClickedName}"/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="areadsel" action="{!addtoava}" reRender="AvaTable,SelTable">
+            <apex:param name="P1" value="" assignTo="{!selClickedName}"/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="PopUpUrlMaker" action="{!showPopup}" reRender="popup">
+            <apex:param name="P1" value="" assignTo="{!ClickedItem}"/>
+        </apex:actionFunction>
+        
+        
+        <apex:pageBlock title="Available">
+            
+            <apex:pageBlock >
+                <apex:inputText id="AvaSearch" value="{!avaSearch}"/>
+                <apex:commandButton value="Search" id="AvaSBtn" action="{!avaupdate}" reRender="AvaTable"/>
+                <apex:commandButton value="Save" id="Save" action="{!save}" style="float:right;display:none;background:rgba(102,178,255,1)" />
+            </apex:pageBlock>
+            
+            <apex:outputPanel id="AvaTable">
+                <apex:pageBlockTable value="{!Avail}" var="item">
+                    <apex:column headerValue="Action">
+                        
+                        <apex:outputLink onclick="readava('{!item.Name}');return false;">Add</apex:outputLink>|
+                        <apex:outputLink onclick="PopUpUrl('{!item.id}');return false;">Edit</apex:outputLink>
+                        
+                    </apex:column>
+                    <apex:column headerValue="Name" value="{!item.Name}"/>
+                    <span>
+                        <apex:commandButton image=""/>
+                    </span>
+                    <apex:column headerValue="Material Price" value="{!item.Material_Price__c}"/>
+                    <apex:column headerValue="Quanitity" value="{!item.Quantity__c}"/>
+                    
+                    <apex:inlineEditSupport event="onclick" showOnedit="Save"/>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Selected">
+            
+            <apex:pageBlock >
+                <apex:inputText id="selSearch"  value="{!selSearch}"/>
+                <apex:commandButton value="Search" id="SelSBtn" action="{!selupdate}" reRender="SelTable"/>
+            </apex:pageBlock>
+            
+            <apex:outputPanel id="SelTable">
+                <apex:pageBlockTable value="{!Slect}" var="item">
+                    <apex:column headerValue="Action">
+                        
+                        <apex:outputLink onclick="readsel('{!item.Name}');return false;">Remove</apex:outputLink>
+                        |<apex:outputLink onclick="PopUpUrl('{!item.id}');return false;">Edit</apex:outputLink> 
+                        
+                    </apex:column>
+                    <apex:column headerValue="Name" value="{!item.Name}"/>
+                    <apex:column headerValue="Material Price" value="{!item.Material_Price__c}"/>
+                    <apex:column headerValue="Quantity" value="{!item.Quantity__c}"/>
+                    
+                    <apex:inlineEditSupport event="onclick" showOnedit="Save" />
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+            
+        </apex:pageBlock> 
+        
+        
+        <apex:outputPanel id="popup">
+            <apex:outputPanel rendered="{!Popup}" >
+                <apex:iframe src=""/>
+                <div id="myModal" class="modal">
+                    
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            
+                            <h2>Edit Component</h2>
+                        </div>
+                        <div class="modal-body">
+                            <apex:pageBlock >
+                                <apex:pageBlockSection >
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel value="Name" />
+                                        <apex:inputText value="{!ComponentToEdit.Name}"/>
+                                    </apex:pageBlockSectionItem>
+                                    <br/>
+                                    
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel value="Material Price" />
+                                        <apex:inputText value="{!ComponentToEdit.Material_Price__c}"/>
+                                    </apex:pageBlockSectionItem>
+                                    <br/>
+                                    
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel value="Quantity" />
+                                        <apex:inputText value="{!ComponentToEdit.Quantity__c}"/>
+                                    </apex:pageBlockSectionItem>
+                                    <br/>
+                                    
+                                    <apex:pageBlockSectionItem >
+                                        <apex:commandButton style="float: left;" action="{!closePopup}" value="Cancel" reRender="popup"/>
+                                        <apex:commandButton style="float: right;" action="{!hidePopup}" value="Save" reRender="AvaTable,SelTable,popup"/>
+                                    </apex:pageBlockSectionItem>
+                                </apex:pageBlockSection>
+                            </apex:pageBlock>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>
